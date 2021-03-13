@@ -1,0 +1,59 @@
+(define (pow x n)
+  (cond ((= n 0) 1)
+        ((< n 0) (/ 1 (pow x (- n))))
+        (else (* x (pow x (- n 1))))))
+
+(define (qpow x n)
+  (define (sqr x) (* x x))
+  (cond ((= n 0) 1)
+        ((< n 0) (/ 1 (qpow x (- n))))
+        ((even? n) (sqr (qpow x (quotient n 2))))
+        (else (* x (qpow x (- n 1))))))
+
+(define (fib n)
+  (cond ((= n 0) 1)
+        ((= n 1) 1)
+        (else (+ (fib (- n 1)) (fib (- n 2))))))
+
+(define (qfib n)
+  (define (iter i fi fi-1)
+      (if (= i n)
+          fi
+          (iter (+ i 1) (+ fi fi-1) fi)))
+      (if (= n 0)
+          0
+          (iter 1 1 0)))
+
+(define (sum1 k)
+   (if (> k 100) 0 (+ (* k k) (sum1 (+ k 1)))))
+
+(define (sum2 a b f dx)
+  (if (> a b) 0 (+ (* dx (f a)) (sum2 (+ a dx) b f dx))))
+
+(define (sum3 x)
+    (if (> x (expt 10 1000)) 0 (+ x (sum3 (exp x)))))
+
+(define (sum a b term next)
+  (if (> a b) 0 (+ (term a) (sum (next a) b term next))))
+
+(define (prod a b term next)
+  (if (> a b) 1 (* (term a) (prod (next a) b term next))))
+
+(define (accumulate op nv a b term next)
+    (if (> a b)
+        nv
+        (op (term a) (accumulate op nv (next a) b term next))))
+
+(define (p n x)
+   (define (term i) (* (- (+ n 1) i) (expt x i)))
+   (define (next i) (+ i 1))
+  (accumulate + 0 0 n term next))
+
+(define (p1 n x)
+   (define (ac1 a b y nv)
+      (if (> a b)
+        nv
+        (+ (* (- (+ n 1) a) y) (ac1 (+ a 1) b (* y x) nv))))
+  (ac1 0 n 1 0))
+
+

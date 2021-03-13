@@ -1,0 +1,64 @@
+(define (factorial1-iter n)
+  (define (for product counter)
+    (if(> counter n) product (for (* product counter) (+ counter 1))))
+  (for 1 1))
+
+(define (factorial-iter n)
+  (fact-iter 1 1 n))
+
+(define (fact-iter product counter max-count)
+  (if(> counter max-count) product (fact-iter (* product counter) (+ 1 counter) max-count)))
+
+(define (sum-iter start end)
+   (define (for-sum a b sum)
+     (if(> a b) sum (for-sum (+ a 1) b (+ sum a))))
+  (for-sum start end 0))
+
+(define (expt-iter x n)
+   (define (for-prod counter product)
+     (if(> counter n) product (for-prod (+ counter 1) (* x product))))
+  (cond ((< n 0) (/ 1(expt-iter x (- n))))
+        ((= n 0) 1)
+        (else (for-prod 1 1)))
+  )
+
+(define (count-digits n)
+  (cond ((< n 0) (count-digits (- n)))
+        (else (if (< n 10) 1 (+ 1 (count-digits (quotient n 10))))))
+ 
+  )
+
+(define (count-digits-iter n)
+  (define (for-count counter n)
+    (if (< n 10) counter (for-count (+ counter 1) (quotient n 10))))
+  (if (< n 0) (for-count 1 (- n))(for-count 1 n))
+ 
+  )
+
+(define (sum-digits n)
+  (cond ((< n 0) (sum-digits (- n)))
+        (else (if (< n 10) n (+ (remainder n 10) (count-digits (quotient n 10))))))
+  )
+
+(define (sum-digits-iter n)
+  (define (for-sum-iter sum num)
+    (if (= num 0) sum (for-sum-iter (+ sum (remainder num 10)) (quotient num 10))))
+  (cond ((< n 0) (sum-digits-iter (- n)))
+        (else (for-sum-iter 0 n))
+  ))
+
+(define (reverse-digits n)
+  (cond ((< n 0) (reverse-digits (- n)))
+        ((< n 10) n)
+        (else (+ (* (expt 10 (- (count-digits n) 1)) (remainder n 10))  (reverse-digits (quotient n 10)))))
+  )
+
+(define (reverse-digits-iter n)
+  (define (for-reverse result num)
+    (if(= num 0) result (for-reverse (+ (* result 10) (remainder num 10)) (quotient num 10))))
+  (cond ((< n 0) (reverse-digits-iter (- n)))
+      
+        (else (for-reverse 0 n)))
+  )
+(define (count-divisors n)
+  (define (for-div i counter )))

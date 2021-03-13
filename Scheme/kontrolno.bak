@@ -1,0 +1,16 @@
+(define (foldr combiner nv l)
+        (if (null? l) nv
+            (combiner (car l) (foldr combiner nv (cdr l)))))
+
+(define (foldl combiner nv l)
+        (if (null? l) nv
+            (foldl combiner (combiner (car l) nv) (cdr l))))
+
+(define (accumulate op nv term a next b)
+  (if (> a b) nv
+      (op (term a) (accumulate op nv term (next a) next b))))
+
+(define (accumulate-iter op nv term a next b); първия тест с ламбда не работи
+      (if (> a b) nv
+           (accumulate op (op (term a) nv) term (next a) next b)))
+
